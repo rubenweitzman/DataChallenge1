@@ -27,6 +27,12 @@ def predict(datafile, ckpt_path):
 
     # Load data
     X, T = make_windows(load_data(datafile))
+    seq_lenght = 8
+    if seq_length > 1:
+        # this throws out the last irregular chunk
+        # it's hacky but not gonna make a big diff
+        nX = int((len(X) // seq_length) * seq_length)
+        X = [X[i : i + seq_length] for i in range(0, nX, seq_length)]
 
     model = ModelModule.load_from_checkpoint(ckpt_path)
 
