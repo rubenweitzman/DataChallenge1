@@ -1,0 +1,6 @@
+name: default
+
+datadir: /cdthome/uty841/Oxford_Wearables_Activity_Recognition/processed_data/
+datadir_anno: /cdthome/uty841/Oxford_Wearables_Activity_Recognition/
+val_size: 20
+seq_length: 8
