@@ -27,7 +27,7 @@ def predict(datafile, ckpt_path):
 
     # Load data
     X, T = make_windows(load_data(datafile))
-    seq_lenght = 8
+    seq_length = 8
     if seq_length > 1:
         # this throws out the last irregular chunk
         # it's hacky but not gonna make a big diff
@@ -35,8 +35,11 @@ def predict(datafile, ckpt_path):
         X = [X[i : i + seq_length] for i in range(0, nX, seq_length)]
 
     model = ModelModule.load_from_checkpoint(ckpt_path)
-
+    print(model.model_cfg)
     model.eval()
+    X = np.asarray(X)
+    X = np.transpose(X, (0, 1, 3, 2))
+    print(X.shape)
     X = torch.from_numpy(X)
     with torch.no_grad():
         y = model(X).numpy()
@@ -112,5 +115,7 @@ class CNN(nn.Module):
 
 if __name__ == "__main__":
     """Example"""
-    y = predict("P123.csv", ckpt_path="best.ckpt")
+    ckpt_path = "/cdtshared/wearables/students/group4/best.ckpt"
+    file_path = "/cdtshared/wearables/students/group4/P123.csv"
+    y = predict(datafile=file_path, ckpt_path=ckpt_path)
     np.save("my_predictions.npy", y)

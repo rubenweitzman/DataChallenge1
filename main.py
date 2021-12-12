@@ -269,7 +269,7 @@ class KFoldDataModule(BaseKFoldDataModule):
         pid = np.load(os.path.join(data_cfg["datadir"], "pid.npy"))
 
         # deriv/test split: P001-P100 for derivation, the rest for testing
-        whr_deriv = np.isin(pid, [f"P{i:03d}" for i in range(1, 101)])
+        whr_deriv = np.isin(pid, [f"P{i:03d}" for i in range(1, 121)])
         X_deriv, Y_deriv, pid_deriv = X[whr_deriv], Y[whr_deriv], pid[whr_deriv]
         X_test, Y_test, pid_test = X[~whr_deriv], Y[~whr_deriv], pid[~whr_deriv]
 
